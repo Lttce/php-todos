@@ -1,0 +1,9 @@
+parameters:
+    level: max
+    paths:
+        - public
+        - src
+    excludePaths:
+        - vendor
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon

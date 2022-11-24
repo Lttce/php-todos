@@ -1,0 +1,25 @@
+services:
+  web:
+    build: ./web
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/html
+      - ./web/000-default.conf:/etc/apache2/sites-available/000-default.conf:ro
+
+  db:
+    build: ./db
+    expose:
+      - "3306"
+    volumes:
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+      - php-todos-db:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
+volumes:
+  php-todos-db:
